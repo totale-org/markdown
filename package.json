@@ -29,6 +29,9 @@
     "release:version": "changeset version",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@totale/utils": "^0.0.7"
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.2",
     "@changesets/cli": "^2.27.11",
