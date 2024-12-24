@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    ////////////////////////////////
+    //     Formatting/Linting     //
+    ////////////////////////////////
+    "esbenp.prettier-vscode",
+    "DavidAnson.vscode-markdownlint",
+    ////////////////////////////////
+    //          Testing           //
+    ////////////////////////////////
+    "vitest.explorer"
+  ]
+}

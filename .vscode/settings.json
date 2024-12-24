@@ -1,0 +1,9 @@
+{
+  ////////////////////////////////
+  //           Files            //
+  ////////////////////////////////
+  "files.associations": {
+    ".prettierignore": "ignore",
+    ".markdownlintignore": "ignore"
+  }
+}

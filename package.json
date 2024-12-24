@@ -1,0 +1,42 @@
+{
+  "name": "@totale/markdown",
+  "version": "0.0.0",
+  "description": "Totale Markdown",
+  "homepage": "https://github.com/totale-org/markdown#readme",
+  "bugs": {
+    "url": "https://github.com/totale-org/markdown/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/totale-org/markdown.git"
+  },
+  "license": "MIT",
+  "author": "Yash Totale",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "check:format": "prettier --check . && markdownlint .",
+    "dev": "vitest",
+    "format": "prettier --write . && markdownlint --fix .",
+    "prepare": "husky",
+    "prepublishOnly": "npm run check:format && npm run build && npm run check:exports && npm run test",
+    "release:publish": "npm run build && npm run check:exports && changeset publish",
+    "release:version": "changeset version",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.2",
+    "@changesets/cli": "^2.27.11",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "markdownlint-cli": "^0.43.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

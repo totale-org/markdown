@@ -1,0 +1,4 @@
+{
+  "*.md": ["prettier --write", "markdownlint --fix"],
+  "*.{ts,json,yml}": "prettier --write"
+}
