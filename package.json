@@ -18,14 +18,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "check:format": "prettier --check . && markdownlint .",
     "dev": "vitest",
     "format": "prettier --write . && markdownlint --fix .",
     "prepare": "husky",
     "prepublishOnly": "npm run check:format && npm run build && npm run check:exports && npm run test",
-    "release:publish": "npm run build && npm run check:exports && changeset publish",
+    "release:publish": "changeset publish",
     "release:version": "changeset version",
     "test": "vitest run"
   },
@@ -36,6 +36,7 @@
     "lint-staged": "^15.2.11",
     "markdownlint-cli": "^0.43.0",
     "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }
