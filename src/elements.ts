@@ -1,10 +1,15 @@
-import { Arrays } from "@totale/utils";
+import type { Arrays } from "@totale/utils";
+import { TotaleMarkdown } from "./index.js";
 
 ////////////////////////////////
 //    Include New Line HOC    //
 ////////////////////////////////
 interface IncludeNewLineOptions {
-  /** Whether to include a newline character at the end of the result. Default is `false`. */
+  /**
+   * Whether to include a newline character at the end of the result.
+   *
+   * Default is based on the config if using within the `TotaleMarkdown` class or based on `DEFAULT_CONFIG` otherwise.
+   */
   includeNewLine?: boolean;
 }
 
@@ -17,11 +22,10 @@ interface IncludeNewLineOptions {
  */
 const includeNewLineHOC = <T extends IncludeNewLineOptions>(
   fn: (options: T) => string,
+  defaultInclude: boolean,
 ) => {
-  return (options: T) => {
-    const includeNewLine = options.includeNewLine ?? false;
-    return fn(options) + (includeNewLine ? "\n" : "");
-  };
+  return (options: T) =>
+    fn(options) + ((options.includeNewLine ?? defaultInclude) ? "\n" : "");
 };
 
 ////////////////////////////////
@@ -38,23 +42,24 @@ const _heading = (options: HeadingOptions): string => {
   return `${"#".repeat(options.level)} ${options.text}`;
 };
 
-export const heading = includeNewLineHOC(_heading);
+export const heading = includeNewLineHOC(
+  _heading,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.heading.includeNewLine,
+);
 
 ////////////////////////////////
 //            Link            //
 ////////////////////////////////
-export interface LinkOptions extends IncludeNewLineOptions {
+export interface LinkOptions {
   /** The text of the link. */
   text: string;
   /** The URL of the link. */
   url: string;
 }
 
-export const _link = (options: LinkOptions): string => {
-  return `[${options.text}](${options.url})`;
+export const link = (options: LinkOptions): string => {
+  return `[${options.text}](${encodeURI(options.url)})`;
 };
-
-export const link = includeNewLineHOC(_link);
 
 ////////////////////////////////
 //       Unordered List       //
@@ -62,15 +67,26 @@ export const link = includeNewLineHOC(_link);
 export interface UnorderedListOptions extends IncludeNewLineOptions {
   /** The items of the unordered list. Recursive arrays are supported for nested lists. */
   items: Arrays.RecursiveArray<string>;
-  /** The indentation level of the list. Default is `0`. */
+  /**
+   * The indentation level of the list.
+   *
+   * Default is based on the config if using within the `TotaleMarkdown` class or based on `DEFAULT_CONFIG` otherwise.
+   */
   indent?: number;
-  /** The increment of the indentation level. Default is `2`. */
+  /**
+   * The amount to increment the indentation level for nested lists.
+   *
+   * Default is based on the config if using within the `TotaleMarkdown` class or based on `DEFAULT_CONFIG` otherwise.
+   */
   indentIncrement?: number;
 }
 
 export const _ul = (options: UnorderedListOptions): string => {
-  const indent = options.indent ?? 0;
-  const indentIncrement = options.indentIncrement ?? 2;
+  const indent =
+    options.indent ?? TotaleMarkdown.DEFAULT_CONFIG.elements.ul.indent;
+  const indentIncrement =
+    options.indentIncrement ??
+    TotaleMarkdown.DEFAULT_CONFIG.elements.ul.indentIncrement;
 
   return options.items
     .map((item) => {
@@ -78,6 +94,7 @@ export const _ul = (options: UnorderedListOptions): string => {
         return ul({
           items: item,
           indent: indent + indentIncrement,
+          indentIncrement,
           includeNewLine: false,
         });
       }
@@ -86,4 +103,7 @@ export const _ul = (options: UnorderedListOptions): string => {
     .join("\n");
 };
 
-export const ul = includeNewLineHOC(_ul);
+export const ul = includeNewLineHOC(
+  _ul,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.ul.includeNewLine,
+);
