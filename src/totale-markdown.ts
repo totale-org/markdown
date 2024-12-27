@@ -1,5 +1,5 @@
 import merge from "deepmerge";
-import { Nullish } from "@totale/utils";
+import { Nullish, Records } from "@totale/utils";
 import {
   heading,
   link,
@@ -9,11 +9,7 @@ import {
   type UnorderedListOptions,
 } from "./index.js";
 
-type DeepPartial<T> = {
-  [P in keyof T]?: DeepPartial<T[P]>;
-};
-
-export interface FullConfig {
+export type FullConfig = {
   elements: {
     heading: {
       includeNewLine: boolean;
@@ -24,9 +20,9 @@ export interface FullConfig {
       indentIncrement: number;
     };
   };
-}
+};
 
-export type PartialConfig = DeepPartial<FullConfig>;
+export type PartialConfig = Records.DeepPartial<FullConfig>;
 
 export class TotaleMarkdown {
   private _config: FullConfig;
