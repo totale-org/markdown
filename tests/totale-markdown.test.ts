@@ -28,13 +28,13 @@ describe("config", () => {
     });
   });
 
-  test("set config", () => {
+  test("configure", () => {
     const md = new TotaleMarkdown();
     md.configure({
       elements: {
         ul: {
-          includeNewLine: false,
           indentIncrement: 4,
+          includeNewLine: false,
         },
       },
     });
@@ -44,8 +44,8 @@ describe("config", () => {
         ...TotaleMarkdown.DEFAULT_CONFIG.elements,
         ul: {
           ...TotaleMarkdown.DEFAULT_CONFIG.elements.ul,
-          includeNewLine: false,
           indentIncrement: 4,
+          includeNewLine: false,
         },
       },
     });
@@ -153,9 +153,9 @@ describe("ul", () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith({
       items: [],
-      includeNewLine: true, // Default newline
       indent: 0, // Default indent
       indentIncrement: 2, // Default indent increment
+      includeNewLine: true, // Default newline
     });
 
     // Some config arguments --> use defaults and override some
@@ -166,24 +166,24 @@ describe("ul", () => {
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenCalledWith({
       items: [],
-      includeNewLine: true, // Default newline
       indent: 4,
       indentIncrement: 2, // Default indent increment
+      includeNewLine: true, // Default newline
     });
 
     // All config arguments --> override defaults
     md.ul({
       items: [],
-      includeNewLine: false,
       indent: 4,
       indentIncrement: 3,
+      includeNewLine: false,
     });
     expect(spy).toHaveBeenCalledTimes(3);
     expect(spy).toHaveBeenCalledWith({
       items: [],
-      includeNewLine: false,
       indent: 4,
       indentIncrement: 3,
+      includeNewLine: false,
     });
   });
 
@@ -193,9 +193,9 @@ describe("ul", () => {
     const md = new TotaleMarkdown({
       elements: {
         ul: {
-          includeNewLine: false,
           indent: 4,
           indentIncrement: 3,
+          includeNewLine: false,
         },
       },
     });
@@ -207,9 +207,9 @@ describe("ul", () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith({
       items: [],
-      includeNewLine: false,
       indent: 4,
       indentIncrement: 3,
+      includeNewLine: false,
     });
 
     // Some config arguments --> use config and override some
@@ -220,24 +220,24 @@ describe("ul", () => {
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenCalledWith({
       items: [],
-      includeNewLine: true,
       indent: 4,
       indentIncrement: 3,
+      includeNewLine: true,
     });
 
     // All config arguments --> override config
     md.ul({
       items: [],
-      includeNewLine: true,
       indent: 2,
       indentIncrement: 1,
+      includeNewLine: true,
     });
     expect(spy).toHaveBeenCalledTimes(3);
     expect(spy).toHaveBeenCalledWith({
       items: [],
-      includeNewLine: true,
       indent: 2,
       indentIncrement: 1,
+      includeNewLine: true,
     });
   });
 });

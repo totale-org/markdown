@@ -2,7 +2,7 @@ import { describe, test, expect } from "vitest";
 import { heading, link, ul } from "../src";
 
 describe("heading", () => {
-  test("multiple levels, default newline (true)", () => {
+  test("default newline (true)", () => {
     const result = heading({ text: "Heading", level: 1 });
     expect(result).toBe("# Heading\n");
 
@@ -33,14 +33,22 @@ describe("heading", () => {
 });
 
 describe("link", () => {
-  test("correct link", () => {
+  test("basic", () => {
     const result = link({ text: "Google", url: "https://google.com" });
     expect(result).toBe("[Google](https://google.com)");
+  });
+
+  test("URL encoding", () => {
+    const result = link({
+      text: "Google",
+      url: "https://google.com?q=hello world",
+    });
+    expect(result).toBe("[Google](https://google.com?q=hello%20world)");
   });
 });
 
 describe("ul", () => {
-  test("correct list, default newline (true), default indent (0), default increment (2)", () => {
+  test("default newline (true), default indent (0), default increment (2)", () => {
     const result = ul({
       items: [
         "Item 1",
