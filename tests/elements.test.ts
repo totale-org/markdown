@@ -1,5 +1,36 @@
 import { describe, test, expect } from "vitest";
-import { heading, link, ul } from "../src";
+import { details, heading, link, ul } from "../src";
+
+describe("details", () => {
+  test("default newline (true)", () => {
+    const result = details({ summary: "Summary", content: "Content" });
+    expect(result).toBe(
+      "<details>\n<summary>\n\nSummary\n</summary>\n\nContent\n</details>\n",
+    );
+  });
+
+  test("custom newline (true)", () => {
+    const result = details({
+      summary: "Summary",
+      content: "Content",
+      includeNewLine: true,
+    });
+    expect(result).toBe(
+      "<details>\n<summary>\n\nSummary\n</summary>\n\nContent\n</details>\n",
+    );
+  });
+
+  test("custom newline (false)", () => {
+    const result = details({
+      summary: "Summary",
+      content: "Content",
+      includeNewLine: false,
+    });
+    expect(result).toBe(
+      "<details>\n<summary>\n\nSummary\n</summary>\n\nContent\n</details>",
+    );
+  });
+});
 
 describe("heading", () => {
   test("default newline (true)", () => {

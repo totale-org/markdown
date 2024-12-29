@@ -29,6 +29,25 @@ const includeNewLineHOC = <T extends IncludeNewLineOptions>(
 };
 
 ////////////////////////////////
+//          Details           //
+////////////////////////////////
+export interface DetailsOptions extends IncludeNewLineOptions {
+  /** The summary of the details. */
+  summary: string;
+  /** The content of the details. */
+  content: string;
+}
+
+const _details = (options: DetailsOptions): string => {
+  return `<details>\n<summary>\n\n${options.summary}\n</summary>\n\n${options.content}\n</details>`;
+};
+
+export const details = includeNewLineHOC(
+  _details,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.details.includeNewLine,
+);
+
+////////////////////////////////
 //          Heading           //
 ////////////////////////////////
 export interface HeadingOptions extends IncludeNewLineOptions {

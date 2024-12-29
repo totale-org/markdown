@@ -52,6 +52,76 @@ describe("config", () => {
   });
 });
 
+describe("details", () => {
+  test("no config", () => {
+    const spy = vi.spyOn(elements, "details");
+
+    const md = new TotaleMarkdown();
+
+    // No config arguments --> use defaults
+    md.details({
+      summary: "",
+      content: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      summary: "",
+      content: "",
+      includeNewLine: true, // Default newline
+    });
+
+    // All config arguments --> override defaults
+    md.details({
+      summary: "",
+      content: "",
+      includeNewLine: false,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      summary: "",
+      content: "",
+      includeNewLine: false,
+    });
+  });
+
+  test("config", () => {
+    const spy = vi.spyOn(elements, "details");
+
+    const md = new TotaleMarkdown({
+      elements: {
+        details: {
+          includeNewLine: false,
+        },
+      },
+    });
+
+    // No config arguments --> use config
+    md.details({
+      summary: "",
+      content: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      summary: "",
+      content: "",
+      includeNewLine: false,
+    });
+
+    // All config arguments --> override config
+    md.details({
+      summary: "",
+      content: "",
+      includeNewLine: true,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      summary: "",
+      content: "",
+      includeNewLine: true,
+    });
+  });
+});
+
 describe("heading", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "heading");

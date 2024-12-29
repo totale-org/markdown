@@ -1,7 +1,4 @@
-export { TotaleMarkdown } from "./totale-markdown.js";
-export { heading, link, ul } from "./elements.js";
-export type {
-  HeadingOptions,
-  LinkOptions,
-  UnorderedListOptions,
-} from "./elements.js";
+export * from "./totale-markdown.js";
+export type * from "./totale-markdown.js";
+export * from "./elements.js";
+export type * from "./elements.js";

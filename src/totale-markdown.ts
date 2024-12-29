@@ -1,9 +1,11 @@
 import merge from "deepmerge";
 import { Nullish, Records } from "@totale/utils";
 import {
+  details,
   heading,
   link,
   ul,
+  type DetailsOptions,
   type HeadingOptions,
   type LinkOptions,
   type UnorderedListOptions,
@@ -11,6 +13,9 @@ import {
 
 export type FullConfig = {
   elements: {
+    details: {
+      includeNewLine: boolean;
+    };
     heading: {
       includeNewLine: boolean;
     };
@@ -28,6 +33,9 @@ export class TotaleMarkdown {
   private _config: FullConfig;
   public static readonly DEFAULT_CONFIG: FullConfig = {
     elements: {
+      details: {
+        includeNewLine: true,
+      },
       heading: {
         includeNewLine: true,
       },
@@ -66,6 +74,13 @@ export class TotaleMarkdown {
    */
   public configure(config: PartialConfig) {
     this._config = merge(this._config, config as FullConfig);
+  }
+
+  public details(options: DetailsOptions): string {
+    return details({
+      includeNewLine: this._config.elements.details.includeNewLine,
+      ...options,
+    });
   }
 
   public heading(options: HeadingOptions): string {
