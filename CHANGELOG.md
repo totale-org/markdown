@@ -1,5 +1,11 @@
 # @totale/markdown
 
+## 0.0.3
+
+### Patch Changes
+
+- 41f633a: Add Details Element
+
 ## 0.0.2
 
 ### Patch Changes
