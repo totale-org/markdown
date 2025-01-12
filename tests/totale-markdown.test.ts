@@ -55,7 +55,6 @@ describe("config", () => {
 describe("details", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "details");
-
     const md = new TotaleMarkdown();
 
     // No config arguments --> use defaults
@@ -86,7 +85,6 @@ describe("details", () => {
 
   test("config", () => {
     const spy = vi.spyOn(elements, "details");
-
     const md = new TotaleMarkdown({
       elements: {
         details: {
@@ -122,10 +120,24 @@ describe("details", () => {
   });
 });
 
+describe("font", () => {
+  test("no config", () => {
+    const spy = vi.spyOn(elements, "font");
+    const md = new TotaleMarkdown();
+
+    md.font({
+      text: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      text: "",
+    });
+  });
+});
+
 describe("heading", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "heading");
-
     const md = new TotaleMarkdown();
 
     // No config arguments --> use defaults
@@ -156,7 +168,6 @@ describe("heading", () => {
 
   test("config", () => {
     const spy = vi.spyOn(elements, "heading");
-
     const md = new TotaleMarkdown({
       elements: {
         heading: {
@@ -195,7 +206,6 @@ describe("heading", () => {
 describe("link", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "link");
-
     const md = new TotaleMarkdown();
 
     md.link({
@@ -213,7 +223,6 @@ describe("link", () => {
 describe("ul", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "ul");
-
     const md = new TotaleMarkdown();
 
     // No config arguments --> use defaults
@@ -259,7 +268,6 @@ describe("ul", () => {
 
   test("config", () => {
     const spy = vi.spyOn(elements, "ul");
-
     const md = new TotaleMarkdown({
       elements: {
         ul: {

@@ -2,10 +2,12 @@ import merge from "deepmerge";
 import { Nullish, Records } from "@totale/utils";
 import {
   details,
+  font,
   heading,
   link,
   ul,
   type DetailsOptions,
+  type FontOptions,
   type HeadingOptions,
   type LinkOptions,
   type UnorderedListOptions,
@@ -79,6 +81,12 @@ export class TotaleMarkdown {
   public details(options: DetailsOptions): string {
     return details({
       includeNewLine: this._config.elements.details.includeNewLine,
+      ...options,
+    });
+  }
+
+  public font(options: FontOptions): string {
+    return font({
       ...options,
     });
   }

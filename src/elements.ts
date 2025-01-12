@@ -1,4 +1,4 @@
-import type { Arrays } from "@totale/utils";
+import { Strings, type Arrays } from "@totale/utils";
 import { TotaleMarkdown } from "./index.js";
 
 ////////////////////////////////
@@ -46,6 +46,23 @@ export const details = includeNewLineHOC(
   _details,
   TotaleMarkdown.DEFAULT_CONFIG.elements.details.includeNewLine,
 );
+
+////////////////////////////////
+//            Font            //
+////////////////////////////////
+export interface FontOptions {
+  /** The text of the font. */
+  text: string;
+  /** The color of the font. */
+  color?: string;
+}
+
+export const font = (options: FontOptions): string => {
+  if (Strings.isString(options.color)) {
+    return `<font color="${options.color}">${options.text}</font>`;
+  }
+  return `<font>${options.text}</font>`;
+};
 
 ////////////////////////////////
 //          Heading           //
@@ -100,7 +117,7 @@ export interface UnorderedListOptions extends IncludeNewLineOptions {
   indentIncrement?: number;
 }
 
-export const _ul = (options: UnorderedListOptions): string => {
+const _ul = (options: UnorderedListOptions): string => {
   const indent =
     options.indent ?? TotaleMarkdown.DEFAULT_CONFIG.elements.ul.indent;
   const indentIncrement =

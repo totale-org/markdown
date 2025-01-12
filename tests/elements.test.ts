@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { details, heading, link, ul } from "../src";
+import { details, font, heading, link, ul } from "../src";
 
 describe("details", () => {
   test("default newline (true)", () => {
@@ -29,6 +29,18 @@ describe("details", () => {
     expect(result).toBe(
       "<details>\n<summary>\n\nSummary\n</summary>\n\nContent\n</details>",
     );
+  });
+});
+
+describe("font", () => {
+  test("basic", () => {
+    const result = font({ text: "Hello, world!" });
+    expect(result).toBe("<font>Hello, world!</font>");
+  });
+
+  test("with color", () => {
+    const result = font({ text: "Hello, world!", color: "red" });
+    expect(result).toBe('<font color="red">Hello, world!</font>');
   });
 });
 
