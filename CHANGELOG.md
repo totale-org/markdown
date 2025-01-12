@@ -1,5 +1,11 @@
 # @totale/markdown
 
+## 0.0.4
+
+### Patch Changes
+
+- b58821f: Add Font Element
+
 ## 0.0.3
 
 ### Patch Changes
