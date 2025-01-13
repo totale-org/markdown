@@ -52,31 +52,50 @@ export const details = includeNewLineHOC(
 //            Font            //
 ////////////////////////////////
 export interface FontOptions {
-  /** The text of the font. */
-  text: string;
+  /** The content of the font. */
+  content: string;
   /** The color of the font. */
   color?: string;
 }
 
 export const font = (options: FontOptions): string => {
   if (Strings.isString(options.color)) {
-    return `<font color="${options.color}">${options.text}</font>`;
+    return `<font color="${options.color}">${options.content}</font>`;
   }
-  return `<font>${options.text}</font>`;
+  return `<font>${options.content}</font>`;
 };
+
+////////////////////////////////
+//        GitHub Alert        //
+////////////////////////////////
+export interface GitHubAlertOptions extends IncludeNewLineOptions {
+  /** The type of GitHub alert. */
+  type: "note" | "tip" | "important" | "warning" | "caution";
+  /** The content of the GitHub alert. */
+  content: string;
+}
+
+const _githubAlert = (options: GitHubAlertOptions): string => {
+  return `> [!${options.type.toUpperCase()}]\n> ${options.content}`;
+};
+
+export const githubAlert = includeNewLineHOC(
+  _githubAlert,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.githubAlert.includeNewLine,
+);
 
 ////////////////////////////////
 //          Heading           //
 ////////////////////////////////
 export interface HeadingOptions extends IncludeNewLineOptions {
-  /** The text of the heading. */
-  text: string;
+  /** The content of the heading. */
+  content: string;
   /** The level of the heading. */
   level: number;
 }
 
 const _heading = (options: HeadingOptions): string => {
-  return `${"#".repeat(options.level)} ${options.text}`;
+  return `${"#".repeat(options.level)} ${options.content}`;
 };
 
 export const heading = includeNewLineHOC(
@@ -88,14 +107,14 @@ export const heading = includeNewLineHOC(
 //            Link            //
 ////////////////////////////////
 export interface LinkOptions {
-  /** The text of the link. */
-  text: string;
+  /** The content of the link. */
+  content: string;
   /** The URL of the link. */
   url: string;
 }
 
 export const link = (options: LinkOptions): string => {
-  return `[${options.text}](${encodeURI(options.url)})`;
+  return `[${options.content}](${encodeURI(options.url)})`;
 };
 
 ////////////////////////////////

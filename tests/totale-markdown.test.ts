@@ -126,11 +126,79 @@ describe("font", () => {
     const md = new TotaleMarkdown();
 
     md.font({
-      text: "",
+      content: "",
     });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith({
-      text: "",
+      content: "",
+    });
+  });
+});
+
+describe("githubAlert", () => {
+  test("no config", () => {
+    const spy = vi.spyOn(elements, "githubAlert");
+    const md = new TotaleMarkdown();
+
+    // No config arguments --> use defaults
+    md.githubAlert({
+      content: "",
+      type: "note",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      type: "note",
+      includeNewLine: true, // Default newline
+    });
+
+    // All config arguments --> override defaults
+    md.githubAlert({
+      content: "",
+      type: "note",
+      includeNewLine: false,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      type: "note",
+      includeNewLine: false,
+    });
+  });
+
+  test("config", () => {
+    const spy = vi.spyOn(elements, "githubAlert");
+    const md = new TotaleMarkdown({
+      elements: {
+        githubAlert: {
+          includeNewLine: false,
+        },
+      },
+    });
+
+    // No config arguments --> use config
+    md.githubAlert({
+      content: "",
+      type: "note",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      type: "note",
+      includeNewLine: false,
+    });
+
+    // All config arguments --> override config
+    md.githubAlert({
+      content: "",
+      type: "note",
+      includeNewLine: true,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      type: "note",
+      includeNewLine: true,
     });
   });
 });
@@ -142,25 +210,25 @@ describe("heading", () => {
 
     // No config arguments --> use defaults
     md.heading({
-      text: "",
+      content: "",
       level: 1,
     });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith({
-      text: "",
+      content: "",
       level: 1,
       includeNewLine: true, // Default newline
     });
 
     // All config arguments --> override defaults
     md.heading({
-      text: "",
+      content: "",
       level: 1,
       includeNewLine: false,
     });
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenCalledWith({
-      text: "",
+      content: "",
       level: 1,
       includeNewLine: false,
     });
@@ -178,25 +246,25 @@ describe("heading", () => {
 
     // No config arguments --> use config
     md.heading({
-      text: "",
+      content: "",
       level: 1,
     });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith({
-      text: "",
+      content: "",
       level: 1,
       includeNewLine: false,
     });
 
     // All config arguments --> override config
     md.heading({
-      text: "",
+      content: "",
       level: 2,
       includeNewLine: true,
     });
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenCalledWith({
-      text: "",
+      content: "",
       level: 2,
       includeNewLine: true,
     });
@@ -209,12 +277,12 @@ describe("link", () => {
     const md = new TotaleMarkdown();
 
     md.link({
-      text: "",
+      content: "",
       url: "",
     });
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith({
-      text: "",
+      content: "",
       url: "",
     });
   });

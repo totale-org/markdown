@@ -3,12 +3,14 @@ import { Nullish, Records } from "@totale/utils";
 import {
   details,
   font,
+  githubAlert,
   heading,
   link,
   table,
   ul,
   type DetailsOptions,
   type FontOptions,
+  type GitHubAlertOptions,
   type HeadingOptions,
   type LinkOptions,
   type TableOptions,
@@ -18,6 +20,9 @@ import {
 export type FullConfig = {
   elements: {
     details: {
+      includeNewLine: boolean;
+    };
+    githubAlert: {
       includeNewLine: boolean;
     };
     heading: {
@@ -42,6 +47,9 @@ export class TotaleMarkdown {
   public static readonly DEFAULT_CONFIG: FullConfig = {
     elements: {
       details: {
+        includeNewLine: true,
+      },
+      githubAlert: {
         includeNewLine: true,
       },
       heading: {
@@ -97,6 +105,13 @@ export class TotaleMarkdown {
 
   public font(options: FontOptions): string {
     return font({
+      ...options,
+    });
+  }
+
+  public githubAlert(options: GitHubAlertOptions): string {
+    return githubAlert({
+      includeNewLine: this._config.elements.githubAlert.includeNewLine,
       ...options,
     });
   }

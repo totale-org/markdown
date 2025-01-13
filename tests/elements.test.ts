@@ -1,6 +1,6 @@
 import { describe, test, expect, vi } from "vitest";
 import * as markdownTable from "markdown-table-ts";
-import { details, font, heading, link, table, ul } from "../src";
+import { details, font, githubAlert, heading, link, table, ul } from "../src";
 
 describe("details", () => {
   test("default newline (true)", () => {
@@ -35,31 +35,59 @@ describe("details", () => {
 
 describe("font", () => {
   test("basic", () => {
-    const result = font({ text: "Hello, world!" });
+    const result = font({ content: "Hello, world!" });
     expect(result).toBe("<font>Hello, world!</font>");
   });
 
   test("with color", () => {
-    const result = font({ text: "Hello, world!", color: "red" });
+    const result = font({ content: "Hello, world!", color: "red" });
     expect(result).toBe('<font color="red">Hello, world!</font>');
+  });
+});
+
+describe("githubAlert", () => {
+  test("default newline (true)", () => {
+    const result = githubAlert({
+      type: "note",
+      content: "This is a note.",
+    });
+    expect(result).toBe("> [!NOTE]\n> This is a note.\n");
+  });
+
+  test("custom newline (true)", () => {
+    const result = githubAlert({
+      type: "note",
+      content: "This is a note.",
+      includeNewLine: true,
+    });
+    expect(result).toBe("> [!NOTE]\n> This is a note.\n");
+  });
+
+  test("custom newline (false)", () => {
+    const result = githubAlert({
+      type: "note",
+      content: "This is a note.",
+      includeNewLine: false,
+    });
+    expect(result).toBe("> [!NOTE]\n> This is a note.");
   });
 });
 
 describe("heading", () => {
   test("default newline (true)", () => {
-    const result = heading({ text: "Heading", level: 1 });
+    const result = heading({ content: "Heading", level: 1 });
     expect(result).toBe("# Heading\n");
 
-    const result2 = heading({ text: "Heading", level: 2 });
+    const result2 = heading({ content: "Heading", level: 2 });
     expect(result2).toBe("## Heading\n");
 
-    const result3 = heading({ text: "Heading", level: 3 });
+    const result3 = heading({ content: "Heading", level: 3 });
     expect(result3).toBe("### Heading\n");
   });
 
   test("custom newline (true)", () => {
     const result = heading({
-      text: "Heading",
+      content: "Heading",
       level: 1,
       includeNewLine: true,
     });
@@ -68,7 +96,7 @@ describe("heading", () => {
 
   test("custom newline (false)", () => {
     const result = heading({
-      text: "Heading",
+      content: "Heading",
       level: 1,
       includeNewLine: false,
     });
@@ -78,13 +106,13 @@ describe("heading", () => {
 
 describe("link", () => {
   test("basic", () => {
-    const result = link({ text: "Google", url: "https://google.com" });
+    const result = link({ content: "Google", url: "https://google.com" });
     expect(result).toBe("[Google](https://google.com)");
   });
 
   test("URL encoding", () => {
     const result = link({
-      text: "Google",
+      content: "Google",
       url: "https://google.com?q=hello world",
     });
     expect(result).toBe("[Google](https://google.com?q=hello%20world)");
