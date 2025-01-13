@@ -1,5 +1,11 @@
 # @totale/markdown
 
+## 0.0.5
+
+### Patch Changes
+
+- 3a8353b: Add Table Element
+
 ## 0.0.4
 
 ### Patch Changes
