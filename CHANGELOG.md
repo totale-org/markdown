@@ -1,5 +1,12 @@
 # @totale/markdown
 
+## 0.0.6
+
+### Patch Changes
+
+- 2c21bbc: Change 'text' options to 'content'
+- 2c21bbc: Add GitHub Alert Element
+
 ## 0.0.5
 
 ### Patch Changes
