@@ -1,5 +1,12 @@
 # @totale/markdown
 
+## 0.0.7
+
+### Patch Changes
+
+- 91c6bc7: Add PrettierIgnore Element
+- 91c6bc7: Add MarkdownlintIgnore Element
+
 ## 0.0.6
 
 ### Patch Changes
