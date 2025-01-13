@@ -1,5 +1,5 @@
 import { Align, getMarkdownTable } from "markdown-table-ts";
-import { Strings, type Arrays } from "@totale/utils";
+import { Arrays, Strings } from "@totale/utils";
 import { TotaleMarkdown } from "./index.js";
 
 ////////////////////////////////
@@ -116,6 +116,45 @@ export interface LinkOptions {
 export const link = (options: LinkOptions): string => {
   return `[${options.content}](${encodeURI(options.url)})`;
 };
+
+////////////////////////////////
+//    MarkdownLint Ignore     //
+////////////////////////////////
+export interface MarkdownlintIgnoreOptions extends IncludeNewLineOptions {
+  /** The content to be ignored by MarkdownLint. */
+  content: string;
+  /** The rules to be ignored by MarkdownLint. */
+  rules?: string[];
+}
+
+const _markdownlintIgnore = (options: MarkdownlintIgnoreOptions): string => {
+  const markdownlintComment = (type: "enable" | "disable") =>
+    `<!-- markdownlint-${type} ${options.rules ? options.rules.join(" ") + " " : ""}-->`;
+
+  return `${markdownlintComment("disable")}\n${options.content}\n${markdownlintComment("enable")}`;
+};
+
+export const markdownlintIgnore = includeNewLineHOC(
+  _markdownlintIgnore,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.prettierIgnore.includeNewLine,
+);
+
+////////////////////////////////
+//      Prettier Ignore       //
+////////////////////////////////
+export interface PrettierIgnoreOptions extends IncludeNewLineOptions {
+  /** The content to be ignored by Prettier. */
+  content: string;
+}
+
+const _prettierIgnore = (options: PrettierIgnoreOptions): string => {
+  return `<!-- prettier-ignore-start -->\n${options.content}\n<!-- prettier-ignore-end -->`;
+};
+
+export const prettierIgnore = includeNewLineHOC(
+  _prettierIgnore,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.prettierIgnore.includeNewLine,
+);
 
 ////////////////////////////////
 //           Table            //

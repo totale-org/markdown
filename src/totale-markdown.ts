@@ -6,6 +6,8 @@ import {
   githubAlert,
   heading,
   link,
+  markdownlintIgnore,
+  prettierIgnore,
   table,
   ul,
   type DetailsOptions,
@@ -13,6 +15,8 @@ import {
   type GitHubAlertOptions,
   type HeadingOptions,
   type LinkOptions,
+  type MarkdownlintIgnoreOptions,
+  type PrettierIgnoreOptions,
   type TableOptions,
   type UnorderedListOptions,
 } from "./index.js";
@@ -26,6 +30,12 @@ export type FullConfig = {
       includeNewLine: boolean;
     };
     heading: {
+      includeNewLine: boolean;
+    };
+    markdownlintIgnore: {
+      includeNewLine: boolean;
+    };
+    prettierIgnore: {
       includeNewLine: boolean;
     };
     table: {
@@ -53,6 +63,12 @@ export class TotaleMarkdown {
         includeNewLine: true,
       },
       heading: {
+        includeNewLine: true,
+      },
+      markdownlintIgnore: {
+        includeNewLine: true,
+      },
+      prettierIgnore: {
         includeNewLine: true,
       },
       table: {
@@ -125,6 +141,20 @@ export class TotaleMarkdown {
 
   public link(options: LinkOptions): string {
     return link({
+      ...options,
+    });
+  }
+
+  public markdownlintIgnore(options: MarkdownlintIgnoreOptions): string {
+    return markdownlintIgnore({
+      includeNewLine: this._config.elements.markdownlintIgnore.includeNewLine,
+      ...options,
+    });
+  }
+
+  public prettierIgnore(options: PrettierIgnoreOptions): string {
+    return prettierIgnore({
+      includeNewLine: this._config.elements.prettierIgnore.includeNewLine,
       ...options,
     });
   }

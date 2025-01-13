@@ -1,6 +1,16 @@
 import { describe, test, expect, vi } from "vitest";
 import * as markdownTable from "markdown-table-ts";
-import { details, font, githubAlert, heading, link, table, ul } from "../src";
+import {
+  details,
+  font,
+  githubAlert,
+  heading,
+  link,
+  markdownlintIgnore,
+  prettierIgnore,
+  table,
+  ul,
+} from "../src";
 
 describe("details", () => {
   test("default newline (true)", () => {
@@ -116,6 +126,69 @@ describe("link", () => {
       url: "https://google.com?q=hello world",
     });
     expect(result).toBe("[Google](https://google.com?q=hello%20world)");
+  });
+});
+
+describe("markdownlintIgnore", () => {
+  test("default newline (true)", () => {
+    const result = markdownlintIgnore({ content: "Content" });
+    expect(result).toBe(
+      "<!-- markdownlint-disable -->\nContent\n<!-- markdownlint-enable -->\n",
+    );
+
+    const result2 = markdownlintIgnore({
+      content: "Content",
+      rules: ["MD001"],
+    });
+    expect(result2).toBe(
+      "<!-- markdownlint-disable MD001 -->\nContent\n<!-- markdownlint-enable MD001 -->\n",
+    );
+  });
+
+  test("custom newline (true)", () => {
+    const result = markdownlintIgnore({
+      content: "Content",
+      includeNewLine: true,
+    });
+    expect(result).toBe(
+      "<!-- markdownlint-disable -->\nContent\n<!-- markdownlint-enable -->\n",
+    );
+  });
+
+  test("custom newline (false)", () => {
+    const result = markdownlintIgnore({
+      content: "Content",
+      includeNewLine: false,
+    });
+    expect(result).toBe(
+      "<!-- markdownlint-disable -->\nContent\n<!-- markdownlint-enable -->",
+    );
+  });
+});
+
+describe("prettierIgnore", () => {
+  test("default newline (true)", () => {
+    const result = prettierIgnore({ content: "Content" });
+    expect(result).toBe(
+      "<!-- prettier-ignore-start -->\nContent\n<!-- prettier-ignore-end -->\n",
+    );
+  });
+
+  test("custom newline (true)", () => {
+    const result = prettierIgnore({ content: "Content", includeNewLine: true });
+    expect(result).toBe(
+      "<!-- prettier-ignore-start -->\nContent\n<!-- prettier-ignore-end -->\n",
+    );
+  });
+
+  test("custom newline (false)", () => {
+    const result = prettierIgnore({
+      content: "Content",
+      includeNewLine: false,
+    });
+    expect(result).toBe(
+      "<!-- prettier-ignore-start -->\nContent\n<!-- prettier-ignore-end -->",
+    );
   });
 });
 

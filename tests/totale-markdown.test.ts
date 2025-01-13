@@ -288,6 +288,126 @@ describe("link", () => {
   });
 });
 
+describe("markdownlintIgnore", () => {
+  test("no config", () => {
+    const spy = vi.spyOn(elements, "markdownlintIgnore");
+    const md = new TotaleMarkdown();
+
+    // No config arguments --> use defaults
+    md.markdownlintIgnore({
+      content: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: true, // Default newline
+    });
+
+    // All config arguments --> override defaults
+    md.markdownlintIgnore({
+      content: "",
+      includeNewLine: false,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: false,
+    });
+  });
+
+  test("config", () => {
+    const spy = vi.spyOn(elements, "markdownlintIgnore");
+    const md = new TotaleMarkdown({
+      elements: {
+        markdownlintIgnore: {
+          includeNewLine: false,
+        },
+      },
+    });
+
+    // No config arguments --> use config
+    md.markdownlintIgnore({
+      content: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: false,
+    });
+
+    // All config arguments --> override config
+    md.markdownlintIgnore({
+      content: "",
+      includeNewLine: true,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: true,
+    });
+  });
+});
+
+describe("prettierIgnore", () => {
+  test("no config", () => {
+    const spy = vi.spyOn(elements, "prettierIgnore");
+    const md = new TotaleMarkdown();
+
+    // No config arguments --> use defaults
+    md.prettierIgnore({
+      content: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: true, // Default newline
+    });
+
+    // All config arguments --> override defaults
+    md.prettierIgnore({
+      content: "",
+      includeNewLine: false,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: false,
+    });
+  });
+
+  test("config", () => {
+    const spy = vi.spyOn(elements, "prettierIgnore");
+    const md = new TotaleMarkdown({
+      elements: {
+        prettierIgnore: {
+          includeNewLine: false,
+        },
+      },
+    });
+
+    // No config arguments --> use config
+    md.prettierIgnore({
+      content: "",
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: false,
+    });
+
+    // All config arguments --> override config
+    md.prettierIgnore({
+      content: "",
+      includeNewLine: true,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      content: "",
+      includeNewLine: true,
+    });
+  });
+});
+
 describe("table", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "table");
