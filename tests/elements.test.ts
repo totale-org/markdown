@@ -1,5 +1,6 @@
-import { describe, test, expect } from "vitest";
-import { details, font, heading, link, ul } from "../src";
+import { describe, test, expect, vi } from "vitest";
+import * as markdownTable from "markdown-table-ts";
+import { details, font, heading, link, table, ul } from "../src";
 
 describe("details", () => {
   test("default newline (true)", () => {
@@ -87,6 +88,89 @@ describe("link", () => {
       url: "https://google.com?q=hello world",
     });
     expect(result).toBe("[Google](https://google.com?q=hello%20world)");
+  });
+});
+
+describe("table", () => {
+  test("default padColumns (true), default newline (true)", () => {
+    const spy = vi.spyOn(markdownTable, "getMarkdownTable");
+
+    const result = table({
+      headers: ["Header 1", "Header 2"],
+      rows: [
+        ["Row 1", "Row 2"],
+        ["Row 3", "Row 4"],
+      ],
+      alignment: ["left", "right"],
+    });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      table: {
+        head: ["Header 1", "Header 2"],
+        body: [
+          ["Row 1", "Row 2"],
+          ["Row 3", "Row 4"],
+        ],
+      },
+      alignColumns: true,
+      alignment: ["left", "right"],
+    });
+
+    expect(result.charAt(result.length - 1)).toBe("\n");
+  });
+
+  test("custom padColumns (false)", () => {
+    const spy = vi.spyOn(markdownTable, "getMarkdownTable");
+
+    table({
+      headers: ["Header 1", "Header 2"],
+      rows: [
+        ["Row 1", "Row 2"],
+        ["Row 3", "Row 4"],
+      ],
+      alignment: ["left", "right"],
+      padColumns: false,
+    });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      table: {
+        head: ["Header 1", "Header 2"],
+        body: [
+          ["Row 1", "Row 2"],
+          ["Row 3", "Row 4"],
+        ],
+      },
+      alignColumns: false,
+      alignment: ["left", "right"],
+    });
+  });
+
+  test("custom newline (true)", () => {
+    const result = table({
+      headers: ["Header 1", "Header 2"],
+      rows: [
+        ["Row 1", "Row 2"],
+        ["Row 3", "Row 4"],
+      ],
+      alignment: ["left", "right"],
+      includeNewLine: true,
+    });
+    expect(result.charAt(result.length - 1)).toBe("\n");
+  });
+
+  test("custom newline (false)", () => {
+    const result = table({
+      headers: ["Header 1", "Header 2"],
+      rows: [
+        ["Row 1", "Row 2"],
+        ["Row 3", "Row 4"],
+      ],
+      alignment: ["left", "right"],
+      includeNewLine: false,
+    });
+    expect(result.charAt(result.length - 1)).not.toBe("\n");
   });
 });
 

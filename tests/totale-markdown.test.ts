@@ -220,6 +220,121 @@ describe("link", () => {
   });
 });
 
+describe("table", () => {
+  test("no config", () => {
+    const spy = vi.spyOn(elements, "table");
+    const md = new TotaleMarkdown();
+
+    // No config arguments --> use defaults
+    md.table({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: true, // Default padColumns
+      includeNewLine: true, // Default newline
+    });
+
+    // Some config arguments --> use defaults and override some
+    md.table({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: false,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: false,
+      includeNewLine: true, // Default newline
+    });
+
+    // All config arguments --> override defaults
+    md.table({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: false,
+      includeNewLine: false,
+    });
+    expect(spy).toHaveBeenCalledTimes(3);
+    expect(spy).toHaveBeenCalledWith({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: false,
+      includeNewLine: false,
+    });
+  });
+
+  test("config", () => {
+    const spy = vi.spyOn(elements, "table");
+    const md = new TotaleMarkdown({
+      elements: {
+        table: {
+          padColumns: false,
+          includeNewLine: false,
+        },
+      },
+    });
+
+    // No config arguments --> use config
+    md.table({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+    });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: false,
+      includeNewLine: false,
+    });
+
+    // Some config arguments --> use config and override some
+    md.table({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: true,
+    });
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: true,
+      includeNewLine: false,
+    });
+
+    // All config arguments --> override config
+    md.table({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: true,
+      includeNewLine: true,
+    });
+    expect(spy).toHaveBeenCalledTimes(3);
+    expect(spy).toHaveBeenCalledWith({
+      headers: ["Header"],
+      rows: [["Row"]],
+      alignment: ["left"],
+      padColumns: true,
+      includeNewLine: true,
+    });
+  });
+});
+
 describe("ul", () => {
   test("no config", () => {
     const spy = vi.spyOn(elements, "ul");

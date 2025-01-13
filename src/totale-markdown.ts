@@ -5,11 +5,13 @@ import {
   font,
   heading,
   link,
+  table,
   ul,
   type DetailsOptions,
   type FontOptions,
   type HeadingOptions,
   type LinkOptions,
+  type TableOptions,
   type UnorderedListOptions,
 } from "./index.js";
 
@@ -21,10 +23,14 @@ export type FullConfig = {
     heading: {
       includeNewLine: boolean;
     };
-    ul: {
+    table: {
+      padColumns: boolean;
       includeNewLine: boolean;
+    };
+    ul: {
       indent: number;
       indentIncrement: number;
+      includeNewLine: boolean;
     };
   };
 };
@@ -41,10 +47,14 @@ export class TotaleMarkdown {
       heading: {
         includeNewLine: true,
       },
-      ul: {
+      table: {
+        padColumns: true,
         includeNewLine: true,
+      },
+      ul: {
         indent: 0,
         indentIncrement: 2,
+        includeNewLine: true,
       },
     },
   };
@@ -104,11 +114,19 @@ export class TotaleMarkdown {
     });
   }
 
+  public table(options: TableOptions): string {
+    return table({
+      padColumns: this._config.elements.table.padColumns,
+      includeNewLine: this._config.elements.table.includeNewLine,
+      ...options,
+    });
+  }
+
   public ul(options: UnorderedListOptions): string {
     return ul({
-      includeNewLine: this._config.elements.ul.includeNewLine,
       indent: this._config.elements.ul.indent,
       indentIncrement: this._config.elements.ul.indentIncrement,
+      includeNewLine: this._config.elements.ul.includeNewLine,
       ...options,
     });
   }

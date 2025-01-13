@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "@totale/utils": "^0.0.8",
-    "deepmerge": "^4.3.1"
+    "deepmerge": "^4.3.1",
+    "markdown-table-ts": "^1.0.3"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.2",

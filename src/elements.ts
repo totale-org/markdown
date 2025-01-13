@@ -1,3 +1,4 @@
+import { Align, getMarkdownTable } from "markdown-table-ts";
 import { Strings, type Arrays } from "@totale/utils";
 import { TotaleMarkdown } from "./index.js";
 
@@ -96,6 +97,44 @@ export interface LinkOptions {
 export const link = (options: LinkOptions): string => {
   return `[${options.text}](${encodeURI(options.url)})`;
 };
+
+////////////////////////////////
+//           Table            //
+////////////////////////////////
+export interface TableOptions extends IncludeNewLineOptions {
+  /** The headers of the table. */
+  headers: string[];
+  /** The rows of the table. */
+  rows: string[][];
+  /** The alignment of the columns of the table. */
+  alignment: ("left" | "center" | "right" | "none")[];
+  /**
+   * Whether to pad the columns of the table. If true, the columns will be padded with spaces to align the text.
+   *
+   * Default is based on the config if using within the `TotaleMarkdown` class or based on `DEFAULT_CONFIG` otherwise.
+   */
+  padColumns?: boolean;
+}
+
+const _table = (options: TableOptions): string => {
+  const alignColumns =
+    options.padColumns ??
+    TotaleMarkdown.DEFAULT_CONFIG.elements.table.padColumns;
+
+  return getMarkdownTable({
+    table: {
+      head: options.headers,
+      body: options.rows,
+    },
+    alignment: options.alignment as Align[],
+    alignColumns,
+  });
+};
+
+export const table = includeNewLineHOC(
+  _table,
+  TotaleMarkdown.DEFAULT_CONFIG.elements.table.includeNewLine,
+);
 
 ////////////////////////////////
 //       Unordered List       //
